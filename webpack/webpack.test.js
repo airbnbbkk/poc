@@ -2,7 +2,10 @@ var preloaders = require("./preloaders");
 var loaders = require("./loaders");
 var webpack = require('webpack');
 module.exports = {
-  entry: ['./src/index.ts'],
+    entry: {
+        app: './src/index.ts',
+        vendor: './src/vendor.ts'
+    },
   output: {
     filename: 'build.js',
     path: 'tmp'

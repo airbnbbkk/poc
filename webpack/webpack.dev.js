@@ -2,10 +2,16 @@ var loaders = require("./loaders");
 var BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var webpack = require('webpack');
+var CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
 module.exports = {
-    entry: ['./src/index.ts'],
+    entry: {
+        app: './src/index.ts',
+        vendor: './src/vendor.ts'
+    },
     output: {
-        filename: 'build.js',
+        filename: '[name].js',
+        chunkFilename: '[id].chunk.js',
+        sourceMapFilename: '[name].map',
         path: 'dist'
     },
     resolve: {
@@ -17,6 +23,9 @@ module.exports = {
     },
     devtool: "inline-eval-cheap-source-map",
     plugins: [
+        new CommonsChunkPlugin({
+            name: ['vendor'].reverse()
+        }),
         new HtmlWebpackPlugin({
             template: './src/index.html',
             inject: 'body',
@@ -39,7 +48,7 @@ module.exports = {
             'window.jquery': 'jquery'
         })
     ],
-    module:{
+    module: {
         loaders: loaders
     }
 };

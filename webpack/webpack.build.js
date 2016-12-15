@@ -2,9 +2,13 @@ var loaders = require("./loaders");
 var preloaders = require("./preloaders");
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var webpack = require('webpack');
+var CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
 
 module.exports = {
-    entry: ['./src/index.ts'],
+    entry: {
+        app: './src/index.ts',
+        vendor: './src/vendor.ts'
+    },
     output: {
         filename: 'build.js',
         path: 'dist'
@@ -18,6 +22,9 @@ module.exports = {
         modulesDirectories: ["node_modules"]
     },
     plugins: [
+        new CommonsChunkPlugin({
+            name: ['vendor'].reverse()
+        }),
         new webpack.optimize.UglifyJsPlugin(
             {
                 warning: false,
@@ -37,12 +44,12 @@ module.exports = {
             'window.jquery': 'jquery'
         })
     ],
-    module:{
-        preLoaders:preloaders,
+    module: {
+        preLoaders: preloaders,
         loaders: loaders
     },
     tslint: {
         emitErrors: true,
         failOnHint: true
-  }
+    }
 };
