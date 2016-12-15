@@ -1,7 +1,7 @@
-<value-dial value="$ctrl.existingSavings" min="0" max="10000000" width="500"
-            on-change="$ctrl.setExistingSavings(value)"
+<value-dial value="$ctrl.ClientService.get('onGoingSaving')" min="0" max="100000" width="200"
+            on-change="$ctrl.setOnGoingSaving(value)"
 ></value-dial>
-<analysis-chart client="$ctrl.ClientrService.get()"></analysis-chart>
+<analysis-chart client="$ctrl.ClientService.get()"></analysis-chart>
 <!--
 <value-dial value="$ctrl.onGoingSavings" min="0" max="10000000" width="300"></value-dial>
 <value-dial value="$ctrl.retirementIncome" min="0" max="10000000" width="300"></value-dial>-->

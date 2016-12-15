@@ -6,21 +6,23 @@ export default class ApplicationPageController implements ng.IController {
 
     constructor(
         private $scope: ng.IScope,
-        private ClientrService: ClientService
+        private ClientService: ClientService
     ) {}
 
     $onInit() {}
 
     public setExistingSavings(value: number) {
-        this.ClientrService.set('existingSaving', value);
+        this.ClientService.set('existingSaving', value);
         this.$scope.$digest();
     }
 
     public setOnGoingSaving(value: number) {
-        this.ClientrService.set('existingSaving', value);
+        this.ClientService.set('onGoingSaving', value);
+        this.$scope.$digest();
     }
 
     public setDesiredIncome(value: number) {
-        this.ClientrService.set('existingSaving', value);
+        this.ClientService.set('desiredIncome', value);
+        this.$scope.$digest();
     }
 }

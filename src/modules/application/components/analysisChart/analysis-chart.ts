@@ -1,4 +1,5 @@
 import AnalysisChartController from './analysis-chart.controller';
+import './analysis-chart.scss';
 
 class AnalysisChartComponent implements ng.IComponentOptions {
     public bindings: any;

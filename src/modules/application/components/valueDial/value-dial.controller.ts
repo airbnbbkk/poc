@@ -1,10 +1,8 @@
 import * as $ from 'jquery';
-import JQueryKnobOptions = JQueryKnob.JQueryKnobOptions;
-
 class ValueDialController implements ng.IController {
 
     public static $inject: Array<string> = ['$scope', '$element'];
-    //bindings
+    // bindings
     public min: number;
     public max: number;
     public value: number;
@@ -43,10 +41,10 @@ class ValueDialController implements ng.IController {
             'height': this.width * (1 - this.knob.offset),
             'thickness': 0.01,
             'release': (v) => {
-                //console.log('release', v);
+                // console.log('release', v);
             },
             'change': (value: number) => {
-                //console.log(this);
+                // console.log(this);
                 this.value = value;
                 this.onChange({value: value});
             },
