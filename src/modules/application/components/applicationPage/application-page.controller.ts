@@ -14,17 +14,15 @@ export default class ApplicationPageController implements ng.IController {
     this.client = this.ClientService.get('');
   }
 
-  public setExistingSavings(value: number) {
-    this.ClientService.set('existingSaving', value);
+  public setExistingSaving(obj: {}) {
+    this.ClientService.set('existingSaving', obj['value']);
   }
 
-  public setOnGoingSaving(obj: number) {
+  public setOnGoingSaving(obj: {}) {
     this.ClientService.set('onGoingSaving', obj['value']);
-    this.client = this.ClientService.get();
-    console.log('this.client', this.client);
   }
 
-  public setDesiredIncome(value: number) {
-    this.ClientService.set('desiredIncome', value);
+  public setDesiredIncome(obj: {}) {
+    this.ClientService.set('desiredIncome', obj['value']);
   }
 }

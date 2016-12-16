@@ -1,11 +1,12 @@
 import * as $ from 'jquery';
+import IOnChangesObject = angular.IOnChangesObject;
 class ValueDialController implements ng.IController {
 
   public static $inject: Array<string> = ['$scope', '$element'];
   // bindings
   public min: number;
   public max: number;
-  public client: number;
+  public value: number;
   public width: number;
   public onChange: (paramObj: {$event: {value: number}}) => void;
 
@@ -30,13 +31,10 @@ class ValueDialController implements ng.IController {
     this.width = Number(this.width);
     this.dialEl = $(this.$element).find('.dial');
     this.setKnob();
-    this.$scope.$on('test', (event: ng.IAngularEvent, value: any) => {
-      this.onChange({$event: {value: value}});
-    })
   }
 
-  $onChanges(obj) {
-    console.log('change', obj);
+  $onChanges(obj: ng.IOnChangesObject) {
+
   }
 
   $postLink() {
@@ -51,23 +49,15 @@ class ValueDialController implements ng.IController {
         // console.log('release', v);
       },
       'change': (value: number) => {
-        // console.log(this)
-        //this.onChange.call(this.$scope, {$event: {value: value}});
-        //this.changeCallback.call(this, value);
-        //this.client.onGoingSaving = value;
-        this.$scope.$broadcast('test', value);
+        this.$scope.$apply(() => {
+          this.onChange({$event: {value: value}});
+        });
       },
       'draw': ((vdCtrl: ValueDialController) => function () {
         window['ctx'] = this;
         vdCtrl.drawKnob.call(vdCtrl, this);
       })(this)
     });
-  }
-
-  public changeCallback(value) {
-    console.log('onchange', this.client);
-    this.client = value;
-    //this.onChange({$event: {value: this.client.onGoingSaving}});
   }
 
   private drawKnob(dial: JQuery): void {

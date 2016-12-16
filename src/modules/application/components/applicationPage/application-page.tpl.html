@@ -1,6 +1,13 @@
-<value-dial client="$ctrl.client.onGoingSaving" min="0" max="100000" width="200"
-            on-change="$ctrl.setOnGoingSaving($event)"
-></value-dial>
+<div class="value-dial-wrapper">
+  <value-dial value="$ctrl.client.existingSaving" min="0" max="5000000" width="200"
+              on-change="$ctrl.setExistingSaving($event)"></value-dial>
+  <value-dial value="$ctrl.client.onGoingSaving" min="0" max="100000" width="200"
+              on-change="$ctrl.setOnGoingSaving($event)"></value-dial>
+  <value-dial value="$ctrl.client.desiredIncome" min="0" max="100000" width="200"
+              on-change="$ctrl.setDesiredIncome($event)"></value-dial>
+
+</div>
+<p>{{ $ctrl.client }}</p>
 <analysis-chart client="$ctrl.client"></analysis-chart>
 <!--
 <value-dial value="$ctrl.onGoingSavings" min="0" max="10000000" width="300"></value-dial>

@@ -1,15 +1,10 @@
 import * as d3 from 'd3';
 import RetirementCalculatorService from './retirement-calculator.service';
-import { Line } from 'd3-shape';
+import {Line} from 'd3-shape';
 export default class ChartService {
   public static $inject: Array<string> = ['RetirementCalculator'];
 
-  // Chart
-  private chart = {
-    width: 800,
-    height: 500
-  };
-  private points: Chart.IPoints = {interactive: [], fixed: {yAxis: []}};
+
   private line: Line<[number, number]>;
 
   constructor(
@@ -17,84 +12,100 @@ export default class ChartService {
   ) {
   }
 
-  public draw(svg: any) {
-    this.setPoints();
+  public draw(chart: Chart.IChart) {
+    this.drawSvg(chart);
+    this.getPoints(chart);
+    this.drawCircles(chart);
+    this.setPoints(chart);
     this.setLine();
-    this.setRect(svg);
-    //this.setPath();
-    svg.node().focus();
+    this.setRect(chart);
+    this.drawAxis(chart);
+    //this.setPath(svg);
+    chart.svg.node().focus();
   }
 
-  public redraw(svg: any) {
+  public redraw(chart: Chart.IChart) {
 
-    this.setPoints();
+    /*circles.data(this.setPoints(chart).fixed.yAxis)
+     .interrupt()
+     .transition()
+     .delay(0)
+     .duration(0)
+     .attr('cx', d => d[0])
+     .attr('cy', d => d[1]);*/
 
-    svg.select('path').attr('d', this.line);
 
-    const circle = svg.selectAll('circle')
-                      .data(this.points.fixed.yAxis, function (d) {
-                        console.log('data', d);
-                        return d;
-                      });
+    /*circle.append('text')
+     .attr('class', 'label')
+     .attr('x', d => d - 50)
+     .attr('y', 10)
+     .attr('dy', '.35em')
+     .text('test');
+     */
+  }
 
+  private drawSvg(chart: Chart.IChart) {
+    chart.svg = d3.select('analysis-chart').append('svg')
+                  .attr('width', chart.width)
+                  .attr('height', chart.height);
+  }
+
+  private drawCircles(chart: Chart.IChart) {
+    const circle = chart.svg.selectAll('circle')
+                        .data(chart.points.fixed.yAxis, d => d);
     circle.enter().append('circle')
           .attr('r', 10.5)
-          .attr('cx', function (d) {
-            console.log('cx', d);
-            return d[0];
-          })
-          .attr('cy', function (d) {
-            console.log('cy', d);
-            return d[1];
-          });
-
-    circle.exit().remove();
+          .attr('cx', d => d[0])
+          .attr('cy', d => d[1]);
   }
 
-  public getPoints(): Chart.IPoints {
-    this.setPoints();
-    return this.points;
-  }
-
-  private setRect(svg: any) {
-    svg.append('rect')
-       .attr('width', this.chart.width)
-       .attr('height', this.chart.height);
+  private setRect(chart: Chart.IChart) {
+    chart.svg.append('rect')
+         .attr('width', chart.width)
+         .attr('height', chart.height);
     // .on('mousedown', mousedown);
   }
 
   private setPath(svg: any) {
     svg.append('path')
        .datum(this.points.fixed.yAxis)
-       .attr('class', 'line')
-       .call(this.redraw.bind(this));
+       .attr('class', 'line');
   }
 
   private setLine() {
     this.line = d3.line();
   }
 
-  private setPoints() {
-    this.getFixedYAxis();
+  private setPoints(chart: Chart.IChart): void {
+    this.getFixedYAxis(chart);
   }
 
-  private getFixedYAxis(): void {
-    console.log('getFixed', this.RetirementCalculator.get());
+  private getFixedYAxis(chart: Chart.IChart): void {
+
     const neededBudget   = this.RetirementCalculator.get().neededBudget(),
           existingSaving = this.RetirementCalculator.get().existingSaving(),
           expectedBudget = this.RetirementCalculator.get().expectedBudget();
 
     const yAxis = d3.scaleLinear()
                     .domain([0, neededBudget])
-                    .range([0, 1]);
+                    .range([1, 0]);
 
-    console.log('neededBudget', neededBudget);
-    console.log('expectedBudget', expectedBudget);
+    chart.points.fixed.yAxis.push([240, chart.height * yAxis(expectedBudget)]);
+    chart.points.fixed.yAxis.push([240, chart.height * yAxis(existingSaving)]);
+    chart.points.fixed.yAxis.push([240, 0]);
+  }
 
-    this.points.fixed.yAxis = [];
-    this.points.fixed.yAxis.push([240, 0]);
-    this.points.fixed.yAxis.push([240, this.chart.height * yAxis(existingSaving)]);
-    this.points.fixed.yAxis.push([240, this.chart.height * yAxis(expectedBudget)]);
-    this.points.fixed.yAxis.push([240, this.chart.height]);
+  private moveCircles() {
+
+  }
+
+  private drawAxis(chart: Chart.IChart) {
+    let ya = d3.axisLeft(chart.svg)
+               .scale(yAxis);
+
+    let legend = chart.svg.append('g')
+                      .attr('class', 'x axis')
+                      .attr('transform', 'translate(100,' + 300 + ')')
+                      .call(ya);
   }
 }
