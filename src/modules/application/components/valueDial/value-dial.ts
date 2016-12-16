@@ -10,7 +10,7 @@ class ValueDialComponent implements ng.IComponentOptions {
         this.template = require('./value-dial.tpl.html');
         this.controller = ValueDialController;
         this.bindings = {
-            value: '<',
+          client: '<',
             min: '<',
             max: '<',
             width: '@',
