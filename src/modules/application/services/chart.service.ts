@@ -7,8 +7,6 @@ export default class ChartService {
 
   private line = d3.line();
 
-  private test = [[], []];
-
   private points: any;
 
   constructor(
@@ -19,7 +17,6 @@ export default class ChartService {
 
   public draw(chart: Chart.IChart) {
     this.drawSvg(chart);
-    //this.getPoints(chart);
     this.setPoints(chart);
     this.drawPoints(chart);
     this.setLine();
@@ -27,18 +24,16 @@ export default class ChartService {
     this.drawXAxis(chart);
     this.drawYAxis(chart);
     this.drawLines(chart);
-    //this.drawAxis(chart);
-    //this.setPath(chart);
     chart.svg.node().focus();
   }
 
   public redraw(chart: Chart.IChart) {
-    if (!this.points) {return;}
+    if (!this.points) { return; }
     this.setPoints(chart);
     this.drawPoints(chart);
     this.drawXAxis(chart);
     this.drawYAxis(chart);
-    chart.svg.selectAll('path').attr('d', this.line);
+    this.reDrawLines(chart);
 
     /*    let legend = chart.svg.append('g')
      .attr('class', 'x legend')
@@ -65,7 +60,7 @@ export default class ChartService {
 
   private drawPoints(chart: Chart.IChart) {
     const points = chart.svg.selectAll('circle')
-                        .data(chart.points.legend.x.concat(chart.points.legend.y), d => d)
+                        .data(chart.points.legend.x.concat(chart.points.legend.y), d => d);
 
     this.points = points;
     points.enter().append('circle')
@@ -81,12 +76,6 @@ export default class ChartService {
          .attr('width', chart.width)
          .attr('height', chart.height);
     // .on('mousedown', mousedown);
-  }
-
-  private setPath(chart: Chart.IChart) {
-    chart.svg.append('path')
-         .datum(chart.points.legend.y)
-         .attr('class', 'line');
   }
 
   private setLine() {
@@ -206,6 +195,10 @@ export default class ChartService {
          .attr('points', '05,30 15,10 25,30')
          .attr('stroke-width', '2px')
          .attr('stroke', 'black');
+  }
+
+  private reDrawLines(chart: Chart.IChart) {
+    chart.svg.selectAll('path').attr('d', this.line);
   }
 
 }
