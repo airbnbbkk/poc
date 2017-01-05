@@ -16,6 +16,7 @@ export default class ApplicationPageController implements ng.IController {
 
   public setExistingSaving(obj: {}) {
     this.ClientService.set('existingSaving', obj['value']);
+
   }
 
   public setOnGoingSaving(obj: {}) {

@@ -21,9 +21,14 @@ export default class AnalysisChartController implements ng.IController {
       height: 500,
       svg: null,
       points: {
-        interactive: [],
-        fixed: {
-          yAxis: []
+        line: {
+          neededBudget: [[], []],
+          expectedBudget: [[], []],
+          existingSaving: [[], []]
+        },
+        legend: {
+          x: [],
+          y: []
         }
       },
       data: {
@@ -38,10 +43,10 @@ export default class AnalysisChartController implements ng.IController {
   }
 
   $onChanges(value: any) {
-    console.log('onchange', value);
+
   }
 
   $doCheck() {
-
+    this.Chart.redraw(this.chart);
   }
 }

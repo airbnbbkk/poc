@@ -16,6 +16,10 @@ circle {
   cursor: move;
 }
 
+.line {
+  stroke-dasharray: 11;
+}
+
 .selected {
   fill: #ff7f0e;
   stroke: #ff7f0e;

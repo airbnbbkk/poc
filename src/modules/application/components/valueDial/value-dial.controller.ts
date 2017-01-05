@@ -1,8 +1,9 @@
 import * as $ from 'jquery';
+import ChartService from '../../services/chart.service';
 import IOnChangesObject = angular.IOnChangesObject;
 class ValueDialController implements ng.IController {
 
-  public static $inject: Array<string> = ['$scope', '$element'];
+  public static $inject: Array<string> = ['$scope', '$element', 'ChartService'];
   // bindings
   public min: number;
   public max: number;
@@ -23,7 +24,8 @@ class ValueDialController implements ng.IController {
 
   constructor(
     private $scope: ng.IScope,
-    private $element: ng.IAugmentedJQuery
+    private $element: ng.IAugmentedJQuery,
+    private Chart: ChartService
   ) {
   }
 
@@ -63,10 +65,10 @@ class ValueDialController implements ng.IController {
   private drawKnob(dial: JQuery): void {
     const context = this.knob.canvas.ctx;
     const currentValue = dial['cv'];
-    const coords = this.getKnobCoords(dial['xy'], dial['arc'](currentValue).e, dial['radius']);
+    const coords = this.getKnobCoords(dial['xy'] * 2, dial['arc'](currentValue).e, dial['radius'] * 2);
 
     // console.log(dial['xy'], dial['arc'](currentValue), dial['radius']);
-    // console.log('dialInst', coords.x, coords.y);
+    //console.log('dialInst', dial);
     context.clearRect(0, 0, this.knob.canvas.width, this.knob.canvas.width);
     context.beginPath();
     context.arc(coords.x, coords.y, this.knob.radius, 0, this.circleAngle, false);

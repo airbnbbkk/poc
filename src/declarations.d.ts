@@ -44,9 +44,14 @@ declare namespace Chart {
   }
 
   interface IPoints {
-    interactive: Array<[number, number]>;
-    fixed: {
-      yAxis: Array<[number, number]>
+    line: {
+      neededBudget: number[][];
+      expectedBudget: number[][];
+      existingSaving: number[][];
+    };
+    legend: {
+      x: any[];
+      y: any[];
     };
   }
 }

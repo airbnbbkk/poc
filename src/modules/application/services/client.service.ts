@@ -8,13 +8,14 @@ export default class ClientService {
       onGoingSaving: 10000,
       desiredIncome: 25000,
       currentAge: 42,
-      retirementAge: 61,
-      lifeExpectancy: 80
+      desiredRetirementAge: 61,
+      retirementAge: 71,
+      lifeExpectancyAge: 80
     };
   }
 
   public get(key?: string): IClient | number {
-    return key ? this.client[key] as number : this.client as IClient;
+    return key ? this.client[key] : this.client as IClient;
   }
 
   public set(key: string, value: number): void {

@@ -7,8 +7,7 @@
               on-change="$ctrl.setDesiredIncome($event)"></value-dial>
 
 </div>
-<p>{{ $ctrl.client }}</p>
-<analysis-chart client="$ctrl.client"></analysis-chart>
+<analysis-chart client="$ctrl.ClientService.get('')"></analysis-chart>
 <!--
 <value-dial value="$ctrl.onGoingSavings" min="0" max="10000000" width="300"></value-dial>
 <value-dial value="$ctrl.retirementIncome" min="0" max="10000000" width="300"></value-dial>-->
