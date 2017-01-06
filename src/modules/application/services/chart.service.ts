@@ -1,13 +1,14 @@
 import * as d3 from 'd3';
 import RetirementCalculatorService from './retirement-calculator.service';
 import ClientService from './client.service';
+import {Line} from 'd3-shape';
+
 export default class ChartService {
   public static $inject: Array<string> = ['RetirementCalculator', 'ClientService'];
 
 
-  private line = d3.line();
-
-  private points: any;
+  private line: Line<[number, number]>;
+  private points: Selection;
 
   constructor(
     private RetirementCalculator: RetirementCalculatorService,
@@ -16,14 +17,13 @@ export default class ChartService {
   }
 
   public draw(chart: Chart.IChart) {
-    this.drawSvg(chart);
+    this.createSvg(chart);
     this.setPoints(chart);
     this.drawPoints(chart);
-    this.setLine();
-    this.setRect(chart);
     this.drawXAxis(chart);
     this.drawYAxis(chart);
-    this.drawLines(chart);
+    this.drawGraph(chart);
+    this.drawGuideLine(chart);
     chart.svg.node().focus();
   }
 
@@ -33,12 +33,13 @@ export default class ChartService {
     this.drawPoints(chart);
     this.drawXAxis(chart);
     this.drawYAxis(chart);
-    this.reDrawLines(chart);
+    this.reDrawGuideLine(chart);
 
     /*    let legend = chart.svg.append('g')
      .attr('class', 'x legend')
      .attr('transform', 'translate(100,' + 300 + ')')
      .call(ya);*/
+
 
     /*this.points.data(chart.points.legend.y, d => d)
      .interrupt()
@@ -52,7 +53,7 @@ export default class ChartService {
      .attr('cy', d => d[1]);*/
   }
 
-  private drawSvg(chart: Chart.IChart) {
+  private createSvg(chart: Chart.IChart) {
     chart.svg = d3.select('analysis-chart').append('svg')
                   .attr('width', chart.width)
                   .attr('height', chart.height);
@@ -69,17 +70,6 @@ export default class ChartService {
           .attr('cy', d => d[1]);
 
     points.exit().remove();
-  }
-
-  private setRect(chart: Chart.IChart) {
-    chart.svg.append('rect')
-         .attr('width', chart.width)
-         .attr('height', chart.height);
-    // .on('mousedown', mousedown);
-  }
-
-  private setLine() {
-    this.line = d3.line();
   }
 
   private setPoints(chart: Chart.IChart): void {
@@ -178,7 +168,9 @@ export default class ChartService {
      .call(ya);*/
   }
 
-  private drawLines(chart: Chart.IChart) {
+  private drawGuideLine(chart: Chart.IChart) {
+    this.line = d3.line();
+
     chart.svg.append('path')
          .datum(chart.points.line.existingSaving)
          .attr('class', 'line');
@@ -190,14 +182,17 @@ export default class ChartService {
     chart.svg.append('path')
          .datum(chart.points.line.neededBudget)
          .attr('class', 'line');
-
-    chart.svg.append('polyline')
-         .attr('points', '05,30 15,10 25,30')
-         .attr('stroke-width', '2px')
-         .attr('stroke', 'black');
   }
 
-  private reDrawLines(chart: Chart.IChart) {
+  private drawGraph(chart: Chart.IChart): void {
+    chart.svg.append('polygon')
+         .attr('class', 'graph-short-fall graph')
+         .attr('points', `20,120 60,40 100,120`)
+         .attr('stroke-width', '2px')
+         .attr('stroke', 'black');
+  };
+
+  private reDrawGuideLine(chart: Chart.IChart): void {
     chart.svg.selectAll('path').attr('d', this.line);
   }
 

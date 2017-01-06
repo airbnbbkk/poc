@@ -44,6 +44,10 @@ declare namespace Chart {
   }
 
   interface IPoints {
+    /*graph: {
+     shortFall: number[];
+
+     };*/
     line: {
       neededBudget: number[][];
       expectedBudget: number[][];
