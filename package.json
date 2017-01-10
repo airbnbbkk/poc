@@ -23,6 +23,7 @@
     "@types/uglify-js": "~2.6.28",
     "angular": "~1.5.8",
     "angular-route": "~1.5.8",
+    "angularjs-slider": "~6.0.0",
     "bootstrap": "~3.3.7",
     "d3": "~4.4.0",
     "font-awesome": "~4.7.0",

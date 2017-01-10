@@ -1,6 +1,6 @@
 export default class ClientService {
 
-  private client: any;
+  private client: IClient;
 
   constructor() {
     this.client = {
@@ -8,8 +8,8 @@ export default class ClientService {
       onGoingSaving: 10000,
       desiredIncome: 25000,
       currentAge: 42,
-      desiredRetirementAge: 61,
-      retirementAge: 71,
+      retirementAge: 61,
+      savingLostAge: 71,
       lifeExpectancyAge: 80
     };
   }

@@ -47,6 +47,9 @@ class ValueDialController implements ng.IController {
       'width': this.width * (1 - this.knob.offset),
       'height': this.width * (1 - this.knob.offset),
       'thickness': 0.01,
+      'fgColor': '#ff0000',
+      'inputColor': '#343434',
+      'bgColor': '#ccc',
       'release': (v) => {
         // console.log('release', v);
       },

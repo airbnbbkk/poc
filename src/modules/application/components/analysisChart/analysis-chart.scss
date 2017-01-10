@@ -1,26 +1,105 @@
-rect {
-  fill: none;
-  pointer-events: all;
+.chart {
+  rect {
+    fill: none;
+    pointer-events: all;
+  }
+
+  circle,
+  .line {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+  }
+
+  circle {
+    fill: #fff;
+    fill-opacity: .2;
+    cursor: move;
+  }
+
+  .line {
+    &.guide-line {
+      stroke-dasharray: 11;
+    }
+    &.xAxis-line, &.gradation-line {
+      stroke: grey;
+      stroke-width: 1px;
+    }
+  }
+
+  .selected {
+    fill: #ff7f0e;
+    stroke: #ff7f0e;
+  }
+  .graph {
+    &.graph-budget {
+      fill: #bbced4;
+    }
+  }
 }
 
-circle,
-.line {
-  fill: none;
-  stroke: steelblue;
-  stroke-width: 1.5px;
-}
-
-circle {
-  fill: #fff;
-  fill-opacity: .2;
-  cursor: move;
-}
-
-.line {
-  stroke-dasharray: 11;
-}
-
-.selected {
-  fill: #ff7f0e;
-  stroke: #ff7f0e;
+.x-axis-chart-slider {
+  &.rzslider {
+    user-select: none;
+    outline-style: none;
+    width: 90%;
+    margin: 0 0 0 10%;
+    .rz-bar-wrapper {
+      padding: 0;
+      .rz-bar {
+        background: #bbb;
+        height: 2px;
+      }
+    }
+    .rz-ticks {
+      left: 23px;
+      .rz-tick {
+        top: -11px;
+        width: 2px;
+        height: 13px;
+        border-radius: 0;
+        background: #bbb;
+        margin: 0;
+        font-weight: bold;
+        color: #6eb4d2;
+        font-size: 1.2em;
+        &.rz-selected {
+          background: #bbb;
+        }
+      }
+    }
+    .rz-bubble {
+      font-weight: bold;
+      color: #6eb4d2;
+      font-size: 1.2em;
+      bottom: -31px;
+      z-index: 6;
+      pointer-events: none;
+    }
+    .rz-pointer {
+      outline-style: none;
+      top: -1px;
+      width: 48px;
+      height: 48px;
+      background-color: #fff;
+      border-radius: 50%;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      &:after {
+        top: -13px;
+        left: 23px;
+        width: 2px;
+        height: 13px;
+        background: #bbb;
+        border-radius: 0;
+      }
+      &:hover, &.rz-active {
+        &:after {
+          background: #bbb;
+        }
+      }
+    }
+    .rz-selection {
+      background: #bbb;
+    }
+  }
 }

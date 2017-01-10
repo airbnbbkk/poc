@@ -1,13 +1,21 @@
-<div class="value-dial-wrapper">
-  <value-dial value="$ctrl.client.existingSaving" min="0" max="5000000" width="200"
-              on-change="$ctrl.setExistingSaving($event)"></value-dial>
-  <value-dial value="$ctrl.client.onGoingSaving" min="0" max="100000" width="200"
-              on-change="$ctrl.setOnGoingSaving($event)"></value-dial>
-  <value-dial value="$ctrl.client.desiredIncome" min="0" max="100000" width="200"
-              on-change="$ctrl.setDesiredIncome($event)"></value-dial>
+<div class="box-left box">
+  <div class="wrapper">
+    <div class="value-dial-wrapper">
+      <value-dial value="$ctrl.client.existingSaving" min="0" max="5000000" width="200"
+                  on-change="$ctrl.setExistingSaving($event)"></value-dial>
+      <value-dial value="$ctrl.client.onGoingSaving" min="0" max="100000" width="200"
+                  on-change="$ctrl.setOnGoingSaving($event)"></value-dial>
+      <value-dial value="$ctrl.client.desiredIncome" min="0" max="100000" width="200"
+                  on-change="$ctrl.setDesiredIncome($event)"></value-dial>
+
+    </div>
+    <analysis-chart client="$ctrl.ClientService.get('')"></analysis-chart>
+  </div>
+</div>
+<div class="box-right box">
 
 </div>
-<analysis-chart client="$ctrl.ClientService.get('')"></analysis-chart>
+
 <!--
 <value-dial value="$ctrl.onGoingSavings" min="0" max="10000000" width="300"></value-dial>
 <value-dial value="$ctrl.retirementIncome" min="0" max="10000000" width="300"></value-dial>-->
