@@ -1,19 +1,25 @@
 <div class="box-left box">
-  <div class="wrapper">
-    <div class="value-dial-wrapper">
-      <value-dial value="$ctrl.client.existingSaving" min="0" max="5000000" width="200"
-                  on-change="$ctrl.setExistingSaving($event)"></value-dial>
-      <value-dial value="$ctrl.client.onGoingSaving" min="0" max="100000" width="200"
-                  on-change="$ctrl.setOnGoingSaving($event)"></value-dial>
-      <value-dial value="$ctrl.client.desiredIncome" min="0" max="100000" width="200"
-                  on-change="$ctrl.setDesiredIncome($event)"></value-dial>
+  <div class="value-dial-wrapper">
+    <value-dial value="$ctrl.client.existingSaving" min="0" max="5000000" dial-step="10000"
+                on-change="$ctrl.setExistingSaving($event)" class="value-dial"></value-dial>
+    <value-dial value="$ctrl.client.onGoingSaving" min="0" max="100000" dial-step="500"
+                on-change="$ctrl.setOnGoingSaving($event)" class="value-dial"></value-dial>
+    <value-dial value="$ctrl.client.desiredIncome" min="0" max="100000" dial-step="500"
+                on-change="$ctrl.setDesiredIncome($event)" class="value-dial"></value-dial>
 
-    </div>
-    <analysis-chart client="$ctrl.ClientService.get('')"></analysis-chart>
   </div>
+  <analysis-chart client="$ctrl.ClientService.get('')"></analysis-chart>
 </div>
 <div class="box-right box">
+  <p>{{ $ctrl.client }}</p>
+  <div class="indicator-needed-budget indicator">
+    {{ $ctrl.getNeededBudget() }}
+  </div>
+  <div class="indicator-saving-lost-age indicator">
 
+  </div>
+  <div class="indicator-short-fall indicator"></div>
+  <div class="indicator-monthly-save indicator"></div>
 </div>
 
 <!--

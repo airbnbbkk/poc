@@ -1,5 +1,7 @@
-<div value-dial>
-  <input type="text" class="dial" ng-model="$ctrl.client.onGoingSaving">
-  <p>{{ $ctrl.client.onGoingSaving }}</p>
+<div class="dial-wrapper">
+  <input type="text" class="dial">
+  <div class="dial-indicator">
+    <input type="text" class="value-display" ng-model="$ctrl.value" readonly>
+  </div>
 </div>
 

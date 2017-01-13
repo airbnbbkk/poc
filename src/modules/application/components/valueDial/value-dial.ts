@@ -13,7 +13,7 @@ class ValueDialComponent implements ng.IComponentOptions {
       value: '<',
       min: '<',
       max: '<',
-      width: '@',
+      dialStep: '@',
       onChange: '&'
     };
   }

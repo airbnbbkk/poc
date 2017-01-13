@@ -10,7 +10,7 @@ export default class ChartService {
   private chart: Chart.IChart;
 
   constructor(
-    private RetirementCalculator: RetirementCalculatorService,
+    private retirementCalculator: RetirementCalculatorService,
     private clientService: ClientService
   ) {
     this.line = d3.line();
@@ -24,24 +24,23 @@ export default class ChartService {
         .drawGraph()
         .drawGuideLine()
         .drawYAxis()
-        .setWindowEventListener()
-        .setFPS(60);
-
+    // .drawPoints()
 
     this.chart.svg.node().focus();
   }
 
-  public redraw() {
+  public redraw(chart: Chart.IChart) {
+    this.chart = chart;
     this._redraw();
   }
 
   private _redraw() {
-    if (!this.chart) { return; }
+    if (!this.chart.svg) { return; }
     this.setPoints()
         .reDrawGraph()
         .reDrawGuideLine()
+        //.drawPoints()
         .drawYAxis();
-    //.drawSlider();
 
     /*    let legend = chart.svg.append('g')
      .attr('class', 'x legend')
@@ -59,6 +58,20 @@ export default class ChartService {
      return d[0];
      })
      .attr('cy', d => d[1]);*/
+  }
+
+  private drawPoints() {
+    const points = this.chart.svg.selectAll('circle')
+                       .data(this.chart.points.legend.x.concat(this.chart.points.legend.y), d => d);
+
+    points.enter().append('circle')
+          .attr('r', 10.5)
+          .attr('cx', d => d[0])
+          .attr('cy', d => d[1]);
+
+    points.exit().remove();
+
+    return this;
   }
 
   private setFPS(wait: number) {
@@ -94,50 +107,6 @@ export default class ChartService {
     return this;
   }
 
-  private onSvgMouseUp() {
-    this.onSliderMouseUp();
-  }
-
-  private drawSlider(): this {
-    const points = this.chart.svg.selectAll('circle')
-                       .data([this.chart.points.legend.x[1],
-                         this.chart.points.legend.x[3]], d => d);
-
-    points.enter().append('circle')
-          .attr('class', d => `${d[3]} slider-circle circle`)
-          .attr('r', 10.5)
-          .attr('cx', d => d[0])
-          .attr('cy', d => d[1])
-          .on('mousedown', d => { this.onSliderMouseDown(); })
-          .on('mousemove', d => { this.onSliderMouseMove(d); });
-
-    return this;
-  }
-
-  private reDrawSlider(x: number) {
-    this.chart.svg.selectAll('.slider-circle')
-        .attr('cx', x)
-        .attr('cy', this.chart.styles.graph.height);
-  }
-
-  private onSliderMouseMove(d: any) {
-    if (this.chart.states.isSliderSelected) {
-      const m = d3.mouse(this.chart.svg.node()),
-            x = Math.max(0, Math.min(this.chart.width, m[0])),
-            y = Math.max(0, Math.min(this.chart.height, m[1]));
-
-      console.log(d, x, y);
-    }
-  }
-
-  private onSliderMouseDown() {
-    this.chart.states.isSliderSelected = true;
-  }
-
-  private onSliderMouseUp() {
-    this.chart.svg.on('mousemove', null);
-  }
-
   private setPoints(): this {
     return this.setXAxisPoints()
                .setYAxisPoints()
@@ -157,9 +126,11 @@ export default class ChartService {
                     .domain([this.chart.options.maximumAge, this.chart.options.startingAge])
                     .range([1, 0]);
 
-    console.log('lifeExpectancy', xAxis(lifeExpectancy), this.chart.styles.graph.width * xAxis(lifeExpectancy));
+    //console.log('lifeExpectancy', xAxis(lifeExpectancy), this.chart.styles.graph.width * xAxis(lifeExpectancy));
 
     const startXPoint = this.chart.points.graph.origin[0];
+
+    //console.log('this.chart.styles.graph.width', this.chart.styles.graph.width);
 
     this.chart.points.legend.x[0] = [this.chart.styles.graph.width * xAxis(current) + startXPoint, this.chart.styles.graph.height, 'Current age'];
     this.chart.points.legend.x[1] =
@@ -189,9 +160,9 @@ export default class ChartService {
 
   private setYAxisPoints(): this {
 
-    const neededBudget   = this.RetirementCalculator.get().neededBudget(),
-          existingSaving = this.RetirementCalculator.get().existingSaving(),
-          expectedBudget = this.RetirementCalculator.get().expectedBudget();
+    const neededBudget   = this.retirementCalculator.get().neededBudget(),
+          existingSaving = this.retirementCalculator.get().existingSaving(),
+          expectedBudget = this.retirementCalculator.get().expectedBudget();
 
     const yAxis = d3.scaleLinear()
                     .domain([0, 10000000])
@@ -208,13 +179,13 @@ export default class ChartService {
   private setGuideLinePoints() {
 
     this.chart.points.line.yAxis.existingSaving[0] = [0, this.chart.points.legend.y[0][1]];
-    this.chart.points.line.yAxis.existingSaving[1] = [this.chart.points.legend.x[1][0], this.chart.points.legend.y[0][1]];
+    this.chart.points.line.yAxis.existingSaving[1] = [this.chart.points.legend.x[0][0], this.chart.points.legend.y[0][1]];
 
     this.chart.points.line.yAxis.expectedBudget[0] = [0, this.chart.points.legend.y[1][1]];
     this.chart.points.line.yAxis.expectedBudget[1] = [this.chart.points.legend.x[1][0], this.chart.points.legend.y[1][1]];
 
     this.chart.points.line.yAxis.neededBudget[0] = [0, this.chart.points.legend.y[2][1]];
-    this.chart.points.line.yAxis.neededBudget[1] = [this.chart.points.legend.x[1][0], this.chart.points.legend.y[2][1]]
+    this.chart.points.line.yAxis.neededBudget[1] = [this.chart.points.legend.x[1][0], this.chart.points.legend.y[2][1]];
 
     return this;
   }
@@ -302,29 +273,19 @@ export default class ChartService {
   };
 
   private reDrawGraph(): this {
-    this.chart.svg.select('.graph-budget').attr('points', `${this.chart.points.graph.budget.join(' ')}`);
-    this.chart.svg.select('.graph-short-fall').attr('points', `${this.chart.points.graph.shortFall.join(' ')}`);
+    this.chart.svg
+        .select('.graph-budget')
+        .attr('points', `${this.chart.points.graph.budget.join(' ')}`);
+    this.chart.svg
+        .select('.graph-short-fall')
+        .attr('points', `${this.chart.points.graph.shortFall.join(' ')}`);
     return this;
   }
 
   private reDrawGuideLine(): this {
-    this.chart.svg.selectAll('path').attr('d', this.line);
+    this.chart.svg
+        .selectAll('path')
+        .attr('d', this.line);
     return this;
-  }
-
-  private setWindowEventListener() {
-    d3.select(window)
-      .on('mousemove', d => { this.onMouseMove(); })
-      .on('mouseup', d => { this.onMouseUp(); });
-
-    return this;
-  }
-
-  private onMouseMove() {
-
-  }
-
-  private onMouseUp() {
-    this.chart.states.isSliderSelected = false;
   }
 }

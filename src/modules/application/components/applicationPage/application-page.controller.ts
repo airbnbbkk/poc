@@ -1,12 +1,14 @@
 import ClientService from '../../services/client.service';
+import RetirementCalculatorService from '../../services/retirement-calculator.service';
 export default class ApplicationPageController implements ng.IController {
-  public static $inject: Array<string> = ['$scope', 'ClientService'];
+  public static $inject: Array<string> = ['$scope', 'ClientService', 'RetirementCalculator'];
 
   public client: any;
 
   constructor(
     private $scope: ng.IScope,
-    private ClientService: ClientService
+    private ClientService: ClientService,
+    private retirementCalculator: RetirementCalculatorService
   ) {
   }
 
@@ -16,7 +18,6 @@ export default class ApplicationPageController implements ng.IController {
 
   public setExistingSaving(obj: {}) {
     this.ClientService.set('existingSaving', obj['value']);
-
   }
 
   public setOnGoingSaving(obj: {}) {
@@ -25,5 +26,9 @@ export default class ApplicationPageController implements ng.IController {
 
   public setDesiredIncome(obj: {}) {
     this.ClientService.set('desiredIncome', obj['value']);
+  }
+
+  public getNeededBudget(): number {
+    return this.retirementCalculator.get().neededBudget();
   }
 }

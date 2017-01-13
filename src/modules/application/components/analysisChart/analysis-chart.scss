@@ -42,8 +42,9 @@
   &.rzslider {
     user-select: none;
     outline-style: none;
-    width: 90%;
+    width: calc(90% + 46px);
     margin: 0 0 0 10%;
+    vertical-align: bottom;
     .rz-bar-wrapper {
       padding: 0;
       .rz-bar {
@@ -52,7 +53,6 @@
       }
     }
     .rz-ticks {
-      left: 23px;
       .rz-tick {
         top: -11px;
         width: 2px;
@@ -62,22 +62,24 @@
         margin: 0;
         font-weight: bold;
         color: #6eb4d2;
-        font-size: 1.2em;
+        font-size: 1rem;
         &.rz-selected {
           background: #bbb;
         }
       }
     }
     .rz-bubble {
+      margin-left: -23px;
       font-weight: bold;
       color: #6eb4d2;
-      font-size: 1.2em;
+      font-size: 1rem;
       bottom: -31px;
       z-index: 6;
       pointer-events: none;
     }
     .rz-pointer {
       outline-style: none;
+      margin-left: -23px;
       top: -1px;
       width: 48px;
       height: 48px;

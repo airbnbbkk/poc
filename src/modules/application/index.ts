@@ -5,6 +5,7 @@ import AnalysisChartComponent from './components/analysisChart/analysis-chart';
 import RetirementCalculatorService from './services/retirement-calculator.service';
 import ClientService from './services/client.service';
 import ChartService from './services/chart.service';
+import ValueDialService from './components/valueDial/value-dial.service';
 
 angular.module('app.application', [])
        .component('applicationPage', new ApplicationPageComponent())
@@ -12,4 +13,5 @@ angular.module('app.application', [])
        .component('analysisChart', new AnalysisChartComponent())
        .service('RetirementCalculator', RetirementCalculatorService)
        .service('ClientService', ClientService)
-       .service('ChartService', ChartService);
+       .service('ChartService', ChartService)
+       .service('ValueDialService', ValueDialService);

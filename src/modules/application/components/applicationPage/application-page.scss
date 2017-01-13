@@ -7,16 +7,25 @@ application-page {
     overflow: hidden;
     height: 100%;
     &.box-left {
-      flex: 2 0px;
+      flex: 3 0px;
+      display: flex;
+      flex-flow: column nowrap;
+      height: 100%;
       .value-dial-wrapper {
+        flex: 2 0;
         background-color: #ecf1f5;
         display: flex;
         justify-content: space-around;
-        value-dial {
-
+        .value-dial {
+          flex: 1 0;
+          display: flex;
+          flex-flow: row nowrap;
+          align-items: center;
+          justify-content: center;
         }
       }
       analysis-chart {
+        flex: 3 0;
         background-color: #e1ecf2;
         display: block;
       }

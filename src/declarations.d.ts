@@ -1,12 +1,10 @@
 declare function require(string: string): string;
 type Point = number[]; // x, y coords
-interface IKnob {
-  canvas: {
-    width: number;
-    el: HTMLCanvasElement,
-    ctx: CanvasRenderingContext2D,
-    resMultiplier: number;
-  };
+interface IKnobHandle {
+  canvas: HTMLCanvasElement;
+  canvasCtx: CanvasRenderingContext2D;
+  bgCanvas: HTMLCanvasElement;
+  bgCanvasCtx: CanvasRenderingContext2D;
   radius: number;
   offset: number;
   lineWidth: number;
@@ -15,6 +13,7 @@ interface IKnob {
     stroke: string;
     arrow: string;
   };
+  dialStep: number;
 }
 
 interface IClient {
@@ -48,7 +47,6 @@ declare namespace Chart {
     };
     svg: d3.Selection<any, any, any, any>;
     points: Chart.IPoints;
-    states: Chart.IStates;
     options: Chart.IOptions;
   }
 
@@ -73,11 +71,6 @@ declare namespace Chart {
       x: any[];
       y: any[];
     };
-  }
-
-  interface IStates {
-    isSliderSelected: boolean;
-    isSliderMoving: boolean;
   }
 
   interface IOptions {

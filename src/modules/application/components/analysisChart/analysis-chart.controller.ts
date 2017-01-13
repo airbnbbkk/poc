@@ -2,7 +2,7 @@ import RetirementCalculatorService from '../../services/retirement-calculator.se
 import ChartService from '../../services/chart.service';
 
 export default class AnalysisChartController implements ng.IController {
-  public static $inject: Array<string> = ['$element', 'RetirementCalculator', 'ChartService'];
+  public static $inject: Array<string> = ['$scope', '$element', '$timeout', 'RetirementCalculator', 'ChartService'];
 
   // bindings
   public client: any;
@@ -11,31 +11,35 @@ export default class AnalysisChartController implements ng.IController {
   public sliderOptions: {[name: string]: any};
 
   constructor(
+    private $scope: ng.IScope,
     private $element: ng.IAugmentedJQuery,
+    private $timeout: ng.ITimeoutService,
     private RetirementCalculator: RetirementCalculatorService,
     private Chart: ChartService
   ) {}
 
   $onInit() {
     const actualChartDim       = this.$element[0].getClientRects()[0],
+          chartW = actualChartDim.width,
+          chartH = actualChartDim.height * 0.85,
           chartLeftMarginRatio = 0.1;
 
     this.chart = {
       target: 'analysis-chart',
-      width: actualChartDim.width,
-      height: 400,
+      width: chartW,
+      height: chartH,
       svg: null,
       styles: {
         xAxis: {},
         yAxis: {},
         graph: {
-          width: actualChartDim.width * (1 - chartLeftMarginRatio),
-          height: 400
+          width: chartW * (1 - chartLeftMarginRatio),
+          height: chartH
         }
       },
       points: {
         graph: {
-          origin: [actualChartDim.width * chartLeftMarginRatio, 400],
+          origin: [chartW * chartLeftMarginRatio, chartH],
           shortFall: [],
           budget: []
         },
@@ -55,12 +59,8 @@ export default class AnalysisChartController implements ng.IController {
           y: []
         }
       },
-      states: {
-        isSliderSelected: false,
-        isSliderMoving: false
-      },
       options: {
-        startingAge: this.client.currentAge - 3,
+        startingAge: this.client.currentAge - 2,
         maximumAge: 100
       }
     };
@@ -90,6 +90,6 @@ export default class AnalysisChartController implements ng.IController {
   }
 
   $doCheck() {
-    this.Chart.redraw();
+    this.Chart.redraw(this.chart);
   }
 }
