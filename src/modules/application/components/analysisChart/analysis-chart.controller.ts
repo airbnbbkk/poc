@@ -20,8 +20,8 @@ export default class AnalysisChartController implements ng.IController {
 
   $onInit() {
     const actualChartDim       = this.$element[0].getClientRects()[0],
-          chartW = actualChartDim.width,
-          chartH = actualChartDim.height * 0.85,
+          chartW = Math.round(actualChartDim.width),
+          chartH = Math.round(actualChartDim.height * 0.85),
           chartLeftMarginRatio = 0.1;
 
     this.chart = {
@@ -39,7 +39,7 @@ export default class AnalysisChartController implements ng.IController {
       },
       points: {
         graph: {
-          origin: [chartW * chartLeftMarginRatio, chartH],
+          origin: [Math.round(chartW * chartLeftMarginRatio), chartH],
           shortFall: [],
           budget: []
         },
@@ -64,10 +64,6 @@ export default class AnalysisChartController implements ng.IController {
         maximumAge: 100
       }
     };
-
-    this.chart.points.graph.origin = [this.chart.width - this.chart.styles.graph.width,
-      this.chart.height - this.chart.styles.graph.height
-    ];
 
     this.sliderOptions = {
       floor: this.chart.options.startingAge,

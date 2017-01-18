@@ -1,7 +1,7 @@
 {
-  "name": "angular-typescript-webpack",
-  "version": "0.1.2",
-  "description": "A seed project for a largescale angular architecture in webpack and typescript",
+  "name": "need-discovery-poc",
+  "version": "0.0.1",
+  "description": "",
   "main": "/",
   "scripts": {
     "start": "webpack-dashboard -- webpack --config webpack/webpack.dev.js --watch --NODE_ENV=dev",
@@ -9,7 +9,7 @@
     "build": "webpack --config webpack/webpack.build.js --NODE_ENV=production",
     "postinstall": "typings i"
   },
-  "author": "Brecht Billiet <billietbrecht@gmail.com>",
+  "author": "Jake Kang <kyoungtae.kang@allianz.com>",
   "license": "MIT",
   "dependencies": {
     "@types/angular": "~1.5.19",

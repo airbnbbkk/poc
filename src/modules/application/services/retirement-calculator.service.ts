@@ -18,7 +18,8 @@ export default class RetirementCalculatorService {
       existingSaving: this.existingSaving.bind(this),
       neededBudget: this.neededBudget.bind(this),
       expectedBudget: this.expectedBudget.bind(this),
-      shortFall: this.shortFall.bind(this)
+      shortFall: this.shortFall.bind(this),
+      savingLostAge: this.savingLostAge.bind(this)
     };
     return result;
   }
@@ -38,7 +39,11 @@ export default class RetirementCalculatorService {
   }
 
   private shortFall(): number {
-    return 0;
+    return this.neededBudget() - this.expectedBudget();
+  }
+
+  private savingLostAge(): number {
+    return this.client.savingLostAge - this.client.retirementAge;
   }
 
   private getMonthsLeft(): number {

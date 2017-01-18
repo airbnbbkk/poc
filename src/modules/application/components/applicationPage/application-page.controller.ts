@@ -1,11 +1,14 @@
 import ClientService from '../../services/client.service';
 import RetirementCalculatorService from '../../services/retirement-calculator.service';
 export default class ApplicationPageController implements ng.IController {
-  public static $inject: Array<string> = ['$scope', 'ClientService', 'RetirementCalculator'];
+  public static $inject: Array<string> = ['$element', '$scope', 'ClientService', 'RetirementCalculator'];
 
   public client: any;
 
+  public valueDialWidth: number;
+
   constructor(
+    private $element: ng.IAugmentedJQuery,
     private $scope: ng.IScope,
     private ClientService: ClientService,
     private retirementCalculator: RetirementCalculatorService
@@ -16,19 +19,27 @@ export default class ApplicationPageController implements ng.IController {
     this.client = this.ClientService.get('');
   }
 
-  public setExistingSaving(obj: {}) {
+  private setExistingSaving(obj: {}) {
     this.ClientService.set('existingSaving', obj['value']);
   }
 
-  public setOnGoingSaving(obj: {}) {
+  private setOnGoingSaving(obj: {}) {
     this.ClientService.set('onGoingSaving', obj['value']);
   }
 
-  public setDesiredIncome(obj: {}) {
+  private setDesiredIncome(obj: {}) {
     this.ClientService.set('desiredIncome', obj['value']);
   }
 
-  public getNeededBudget(): number {
+  private getNeededBudget(): number {
     return this.retirementCalculator.get().neededBudget();
+  }
+
+  private getShortfall(): number {
+    return this.retirementCalculator.get().shortFall();
+  }
+
+  private getSavingLostAge(): number {
+    return this.retirementCalculator.get().savingLostAge();
   }
 }

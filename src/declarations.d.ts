@@ -1,10 +1,16 @@
 declare function require(string: string): string;
 type Point = number[]; // x, y coords
 interface IKnobHandle {
+  x: number;
+  y: number;
   canvas: HTMLCanvasElement;
   canvasCtx: CanvasRenderingContext2D;
   bgCanvas: HTMLCanvasElement;
   bgCanvasCtx: CanvasRenderingContext2D;
+  gaugeCanvas: HTMLCanvasElement;
+  gaugeCanvasCtx: CanvasRenderingContext2D;
+  handleCanvas: HTMLCanvasElement;
+  handleCanvasCtx: CanvasRenderingContext2D;
   radius: number;
   offset: number;
   lineWidth: number;
@@ -14,6 +20,11 @@ interface IKnobHandle {
     arrow: string;
   };
   dialStep: number;
+  value: {
+    prev: number;
+    curr: number;
+    acc: number;
+  }
 }
 
 interface IClient {

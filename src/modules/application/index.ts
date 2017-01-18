@@ -6,8 +6,10 @@ import RetirementCalculatorService from './services/retirement-calculator.servic
 import ClientService from './services/client.service';
 import ChartService from './services/chart.service';
 import ValueDialService from './components/valueDial/value-dial.service';
+import 'angularjs-slider/dist/rzslider.css';
+import 'jquery-knob';
 
-angular.module('app.application', [])
+angular.module('app.application', ['rzModule'])
        .component('applicationPage', new ApplicationPageComponent())
        .component('valueDial', new ValueDialComponent())
        .component('analysisChart', new AnalysisChartComponent())

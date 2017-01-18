@@ -15,9 +15,12 @@
     justify-content: center;
     pointer-events: none;
     .value-display {
-      width: 70%;
+      width: 50%;
       align-self: center;
       text-align: center;
+      -webkit-appearance: none;
+      border: none;
+      background-color: transparent;
     }
   }
 }

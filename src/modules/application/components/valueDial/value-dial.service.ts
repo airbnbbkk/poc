@@ -42,7 +42,7 @@ export default class ValueDialService {
       'draw': ((vdCtrl: ValueDialController) => function () {
         vdCtrl.knob = window['ctx'] = this;
         vdCtrl.knob['handle'] = knobHandle
-        vdCtrl.reDrawKnobHandle();
+        vdCtrl.rotateKnobHandle();
       })(this)
     });
     this.knobHandle.radius = this.width * this.knob['scale'] / 10;

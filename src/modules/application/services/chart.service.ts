@@ -23,7 +23,7 @@ export default class ChartService {
         .setPoints()
         .drawGraph()
         .drawGuideLine()
-        .drawYAxis()
+        .drawYAxis();
     // .drawPoints()
 
     this.chart.svg.node().focus();
@@ -39,25 +39,7 @@ export default class ChartService {
     this.setPoints()
         .reDrawGraph()
         .reDrawGuideLine()
-        //.drawPoints()
-        .drawYAxis();
-
-    /*    let legend = chart.svg.append('g')
-     .attr('class', 'x legend')
-     .attr('transform', 'translate(100,' + 300 + ')')
-     .call(ya);*/
-
-
-    /*this.points.data(chart.points.legend.y, d => d)
-     .interrupt()
-     .transition()
-     .delay(0)
-     .duration(0)
-     .attr('cx', d => {
-     console.log(d);
-     return d[0];
-     })
-     .attr('cy', d => d[1]);*/
+        .reDrawYAxis();
   }
 
   private drawPoints() {
@@ -72,32 +54,6 @@ export default class ChartService {
     points.exit().remove();
 
     return this;
-  }
-
-  private setFPS(wait: number) {
-
-    let timeout = null;
-    let previous = 0;
-    wait = 1000 / wait;
-    let later = () => {
-      previous = new Date().getTime();
-      timeout = null;
-      this._redraw();
-    };
-    this.redraw = () => {
-      let now = new Date().getTime();
-      let remaining = wait - (now - previous);
-      if (remaining <= 0 || remaining > wait) {
-        if (timeout) {
-          clearTimeout(timeout);
-          timeout = null;
-        }
-        previous = now;
-        this._redraw();
-      } else if (!timeout) {
-        timeout = setTimeout(later, remaining);
-      }
-    };
   }
 
   private createSvg() {
@@ -126,34 +82,23 @@ export default class ChartService {
                     .domain([this.chart.options.maximumAge, this.chart.options.startingAge])
                     .range([1, 0]);
 
-    //console.log('lifeExpectancy', xAxis(lifeExpectancy), this.chart.styles.graph.width * xAxis(lifeExpectancy));
-
     const startXPoint = this.chart.points.graph.origin[0];
 
-    //console.log('this.chart.styles.graph.width', this.chart.styles.graph.width);
-
-    this.chart.points.legend.x[0] = [this.chart.styles.graph.width * xAxis(current) + startXPoint, this.chart.styles.graph.height, 'Current age'];
+    this.chart.points.legend.x[0] = [Math.round(this.chart.styles.graph.width * xAxis(current) + startXPoint), this.chart.styles.graph.height, 'Current age'];
     this.chart.points.legend.x[1] =
-      [this.chart.styles.graph.width * xAxis(retirementAge) + startXPoint,
+      [Math.round(this.chart.styles.graph.width * xAxis(retirementAge) + startXPoint),
         this.chart.styles.graph.height,
         'Desired retirement age'];
     this.chart.points.legend.x[2] =
-      [this.chart.styles.graph.width * xAxis(savingLostAge) + startXPoint, this.chart.styles.graph.height, 'retirement age'];
+      [Math.round(this.chart.styles.graph.width * xAxis(savingLostAge) + startXPoint), this.chart.styles.graph.height, 'retirement age'];
     this.chart.points.legend.x[3] =
-      [this.chart.styles.graph.width * xAxis(lifeExpectancy) + startXPoint,
+      [Math.round(this.chart.styles.graph.width * xAxis(lifeExpectancy) + startXPoint),
         this.chart.styles.graph.height,
         'Life expectancy age'];
 
     // xAxis line
     this.chart.points.line.xAxis.axis[0] = [0, this.chart.styles.graph.height];
     this.chart.points.line.xAxis.axis[1] = [this.chart.styles.graph.width, this.chart.styles.graph.height];
-
-    // gradations
-    this.chart.points.line.xAxis.gradations[0] = [this.chart.points.legend.x[0], [this.chart.points.legend.x[0][0]]];
-
-    this.chart.points.legend.x.forEach((legendX: number[], index: number) => {
-      this.chart.points.line.xAxis.gradations[index] = [legendX, [legendX[0], legendX[1] + 15]];
-    });
 
     return this;
   }
@@ -169,22 +114,21 @@ export default class ChartService {
                     .range([1, 0]);
 
 
-    this.chart.points.legend.y[0] = [10, this.chart.height * yAxis(existingSaving), 'existingSaving'];
-    this.chart.points.legend.y[1] = [10, this.chart.height * yAxis(expectedBudget), 'expectedBudget'];
-    this.chart.points.legend.y[2] = [10, this.chart.height * yAxis(neededBudget), 'neededBudget'];
-
+    this.chart.points.legend.y[0] = [60, Math.round(this.chart.height * yAxis(existingSaving)), existingSaving];
+    this.chart.points.legend.y[1] = [60, Math.round(this.chart.height * yAxis(expectedBudget)), expectedBudget];
+    this.chart.points.legend.y[2] = [60, Math.round(this.chart.height * yAxis(neededBudget)), neededBudget];
     return this;
   }
 
   private setGuideLinePoints() {
 
-    this.chart.points.line.yAxis.existingSaving[0] = [0, this.chart.points.legend.y[0][1]];
+    this.chart.points.line.yAxis.existingSaving[0] = [this.chart.points.legend.y[0][0] + 15, this.chart.points.legend.y[0][1]];
     this.chart.points.line.yAxis.existingSaving[1] = [this.chart.points.legend.x[0][0], this.chart.points.legend.y[0][1]];
 
-    this.chart.points.line.yAxis.expectedBudget[0] = [0, this.chart.points.legend.y[1][1]];
+    this.chart.points.line.yAxis.expectedBudget[0] = [this.chart.points.legend.y[0][0] + 15, this.chart.points.legend.y[1][1]];
     this.chart.points.line.yAxis.expectedBudget[1] = [this.chart.points.legend.x[1][0], this.chart.points.legend.y[1][1]];
 
-    this.chart.points.line.yAxis.neededBudget[0] = [0, this.chart.points.legend.y[2][1]];
+    this.chart.points.line.yAxis.neededBudget[0] = [this.chart.points.legend.y[0][0] + 15, this.chart.points.legend.y[2][1]];
     this.chart.points.line.yAxis.neededBudget[1] = [this.chart.points.legend.x[1][0], this.chart.points.legend.y[2][1]];
 
     return this;
@@ -231,17 +175,24 @@ export default class ChartService {
 
     legend.enter().append('text')
           .attr('class', 'label yLegend')
-          .attr('x', d => d[0])
-          .attr('y', d => d[1])
+          .attr('transform', d => `translate(${d[0]},${d[1]})`)
+          .attr('text-anchor', 'end')
           .text(d => d[2]);
-
-    legend.exit().remove();
-
 
     /*    let legend = chart.svg.append('g')
      .attr('class', 'x legend')
      .attr('transform', 'translate(100,' + 300 + ')')
      .call(ya);*/
+    return this;
+  }
+
+  private reDrawYAxis(): this {
+    this.chart.svg.selectAll('.yLegend')
+        .text((d: any, i: number) => this.chart.points.legend.y[i][2])
+        .attr('transform', (d: any, i: number) =>
+          `translate(${this.chart.points.legend.y[i][0]},${this.chart.points.legend.y[i][1]})`)
+
+
     return this;
   }
 
