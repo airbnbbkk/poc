@@ -1,5 +1,6 @@
 application-page {
-  height: 100%;
+  color: #393b3a;
+  height: calc(100% - 65px);
   position: relative;
   display: flex;
   flex-flow: row wrap;
@@ -24,14 +25,44 @@ application-page {
           justify-content: center;
         }
       }
-      analysis-chart {
-        flex: 3 0;
-        background-color: #e1ecf2;
-        display: block;
-      }
     }
     &.box-right {
-      flex: 1 0px;
+      display: flex;
+      flex: 1 0;
+      flex-flow: column nowrap;
+      padding: 2rem 1rem 0 1rem;
+      .indicator {
+        flex: 1 0;
+        padding: 0 1rem;
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: center;
+        .indicator-label {
+          color: #8fa8ad;
+          font-weight: bold;
+          font-size: 0.8rem;
+        }
+        .indicator-value {
+          font-size: 1.5rem;
+          .indicator-unit, .indicator-age {
+            font-size: 1.2rem;
+          }
+        }
+        &.indicator-short-fall {
+          display: flex;
+          flex-flow: column nowrap;
+          justify-content: center;
+          color: #fff;
+          background-color: #d43244;
+          border: 5px solid #f28e46;
+          .indicator-label {
+            color: #fff;
+          }
+          .indicator-value {
+            font-size: 2.5rem;
+          }
+        }
+      }
     }
   }
 }

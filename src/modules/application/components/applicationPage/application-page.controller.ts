@@ -42,4 +42,8 @@ export default class ApplicationPageController implements ng.IController {
   private getSavingLostAge(): number {
     return this.retirementCalculator.get().savingLostAge();
   }
+
+  private getSavingLastYrs(): number {
+    return this.retirementCalculator.get().savingLastYrs();
+  }
 }

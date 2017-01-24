@@ -140,31 +140,28 @@ export default class ChartService {
   }
 
   private setBudgetGraphPoints() {
-    const p0 = [this.chart.points.graph.origin[0], this.chart.points.legend.y[0][1]],
-          p1 = [this.chart.points.legend.x[0][0], this.chart.points.legend.y[0][1]],
-          p2 = [this.chart.points.legend.x[0][0], this.chart.points.legend.y[0][1]],
-          p3 = [this.chart.points.legend.x[1][0] - 5, this.chart.points.legend.y[1][1]],
-          p4 = [this.chart.points.legend.x[1][0] + 5, this.chart.points.legend.y[1][1]],
-          p5 = [this.chart.points.legend.x[2][0], this.chart.points.legend.x[2][1]],
-          p6 = [this.chart.points.graph.origin[0], this.chart.height];
+    const p0                       = [this.chart.points.graph.origin[0], this.chart.points.legend.y[0][1]],
+          p1                       = [this.chart.points.legend.x[0][0], this.chart.points.legend.y[0][1]],
+          p2 = [this.chart.points.legend.x[1][0] - 5, this.chart.points.legend.y[1][1]],
+          p3 = [this.chart.points.legend.x[1][0] + 5, this.chart.points.legend.y[1][1]],
+          p4 = [this.chart.points.legend.x[2][0], this.chart.points.legend.x[2][1]],
+          p5 = [this.chart.points.graph.origin[0], this.chart.height];
 
-    this.chart.points.graph.budget = [p0, p1, p2, p3, p4, p5, p6];
+    this.chart.points.graph.budget = [p0, p1, p2, p3, p4, p5, p0];
 
     return this;
   }
 
   private setShortFallGraphPoints() {
-    const p0 = this.chart.points.graph.budget[1],
-          p1 = [this.chart.points.legend.x[1][0] - 5, this.chart.points.legend.y[2][1]],
-          p2 = [this.chart.points.legend.x[1][0] + 5, this.chart.points.legend.y[2][1]],
-          p3 = [this.chart.points.legend.x[3][0], this.chart.points.legend.x[3][1]],
-          p4 = this.chart.points.graph.budget[5],
-          p5 = this.chart.points.graph.budget[4],
-          p6 = this.chart.points.graph.budget[3],
-          p7 = this.chart.points.graph.budget[2],
-          p8 = this.chart.points.graph.budget[1];
+    const p0                          = this.chart.points.graph.budget[1],
+          p1                          = [this.chart.points.legend.x[1][0] - 5, this.chart.points.legend.y[2][1]],
+          p2                          = [this.chart.points.legend.x[1][0] + 5, this.chart.points.legend.y[2][1]],
+          p3                          = [this.chart.points.legend.x[3][0], this.chart.points.legend.x[3][1]],
+          p4 = this.chart.points.graph.budget[4],
+          p5 = this.chart.points.graph.budget[3],
+          p6 = this.chart.points.graph.budget[2];
 
-    this.chart.points.graph.shortFall = [p0, p1, p2, p3, p4, p5, p6, p7, p8];
+    this.chart.points.graph.shortFall = [p0, p1, p2, p3, p4, p5, p6];
 
     return this;
   }

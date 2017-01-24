@@ -12,20 +12,29 @@
 </div>
 <div class="box-right box">
   <div class="indicator-needed-budget indicator">
-    <p>YOU WILL NEED</p>
-    <p>{{ $ctrl.getNeededBudget() }}</p>
+    <p class="indicator-label">YOU WILL NEED</p>
+    <p class="indicator-value">
+      <span>{{ $ctrl.getNeededBudget() }}</span>
+      <span class="indicator-unit">NT$</span>
+    </p>
   </div>
   <div class="indicator-saving-lost-age indicator">
-    <p>YOUR SAVINGS WILL LAST</p>
-    <p>{{ $ctrl.getSavingLostAge() }}</p>
+    <p class="indicator-label">YOUR SAVINGS WILL LAST</p>
+    <p class="indicator-value">
+      <span>{{ $ctrl.getSavingLastYrs() }}</span>
+      <span class="indicator-unit">yrs</span>
+      <span class="indicator-age">
+        (Age: {{ $ctrl.getSavingLostAge()}})
+      </span>
+    </p>
   </div>
   <div class="indicator-short-fall indicator">
-    <p>YOUR SHORTFALL</p>
-    <p>{{ $ctrl.getShortfall() }}</p>
+    <p class="indicator-label">YOUR SHORTFALL</p>
+    <p class="indicator-value">{{ $ctrl.getShortfall() }}</p>
   </div>
   <div class="indicator-monthly-save indicator">
-    <p>SAVE AN ADDITIONAL</p>
-    <p></p>
+    <p class="indicator-label">SAVE AN ADDITIONAL</p>
+    <p class="indicator-value"></p>
   </div>
 </div>
 

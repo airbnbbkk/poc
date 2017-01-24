@@ -19,7 +19,8 @@ export default class RetirementCalculatorService {
       neededBudget: this.neededBudget.bind(this),
       expectedBudget: this.expectedBudget.bind(this),
       shortFall: this.shortFall.bind(this),
-      savingLostAge: this.savingLostAge.bind(this)
+      savingLostAge: this.savingLostAge.bind(this),
+      savingLastYrs: this.savingLastYrs.bind(this)
     };
     return result;
   }
@@ -43,10 +44,14 @@ export default class RetirementCalculatorService {
   }
 
   private savingLostAge(): number {
-    return this.client.savingLostAge - this.client.retirementAge;
+    return this.client.savingLostAge;
   }
 
   private getMonthsLeft(): number {
     return (this.client.retirementAge - this.client.currentAge) * 12;
+  }
+
+  private savingLastYrs(): number {
+    return this.client.savingLostAge - this.client.retirementAge;
   }
 }

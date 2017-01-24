@@ -19,10 +19,10 @@ export default class AnalysisChartController implements ng.IController {
   ) {}
 
   $onInit() {
-    const actualChartDim       = this.$element[0].getClientRects()[0],
+    const actualChartDim   = this.$element[0].querySelector('.chart').getClientRects()[0],
           chartW = Math.round(actualChartDim.width),
-          chartH = Math.round(actualChartDim.height * 0.85),
-          chartLeftMarginRatio = 0.1;
+          chartH           = Math.round(actualChartDim.height),
+          chartMarginRatio = 0.1;
 
     this.chart = {
       target: 'analysis-chart',
@@ -33,13 +33,13 @@ export default class AnalysisChartController implements ng.IController {
         xAxis: {},
         yAxis: {},
         graph: {
-          width: chartW * (1 - chartLeftMarginRatio),
+          width: chartW * (1 - chartMarginRatio),
           height: chartH
         }
       },
       points: {
         graph: {
-          origin: [Math.round(chartW * chartLeftMarginRatio), chartH],
+          origin: [Math.round(chartW * chartMarginRatio), chartH],
           shortFall: [],
           budget: []
         },

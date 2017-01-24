@@ -26,7 +26,7 @@ class ValueDialController implements ng.IController {
     this.width = this.$element[0].getBoundingClientRect().width;
     this.dialStep = Number(this.dialStep);
     this.setKnob();
-    this.setFPS(60);
+    this.setFPS(90);
   }
 
   $onChanges(obj: ng.IOnChangesObject) {
@@ -169,8 +169,6 @@ class ValueDialController implements ng.IController {
     this.knobHandle.handleCanvasCtx.shadowOffsetX = 5;
     this.knobHandle.handleCanvasCtx.shadowOffsetY = 15;
     this.knobHandle.handleCanvasCtx.fill();
-
-    const arrow = ''
 
     this.knobHandle.handleCanvasCtx.font = '40px Georgia';
     this.knobHandle.handleCanvasCtx.fillStyle = '#4b91c4';
