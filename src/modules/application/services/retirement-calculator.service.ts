@@ -11,7 +11,6 @@ export default class RetirementCalculatorService {
   }
 
   // below formulas are pure imaginations for POC
-
   public get() {
     this.client = this.Client.get() as IClient;
     const result = {

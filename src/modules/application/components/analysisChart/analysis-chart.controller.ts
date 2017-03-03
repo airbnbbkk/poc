@@ -19,9 +19,9 @@ export default class AnalysisChartController implements ng.IController {
   ) {}
 
   $onInit() {
-    const actualChartDim   = this.$element[0].querySelector('.chart').getClientRects()[0],
-          chartW = Math.round(actualChartDim.width),
-          chartH           = Math.round(actualChartDim.height),
+    const actualChartDim   = this.$element[0].getClientRects()[0],
+          chartW           = Math.round(actualChartDim.width),
+          chartH           = Math.round(actualChartDim.height * 0.85),
           chartMarginRatio = 0.1;
 
     this.chart = {

@@ -9,7 +9,7 @@
     "build": "webpack --config webpack/webpack.build.js --NODE_ENV=production"
   },
   "author": "Jake Kang <kyoungtae.kang@allianz.com>",
-  "license": "MIT",
+  "license": "none",
   "dependencies": {
     "@types/d3": "~4.4.0",
     "angular": "~1.5.8",
